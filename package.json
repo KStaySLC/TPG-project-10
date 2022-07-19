@@ -1,0 +1,22 @@
+{
+
+    "name": "Team Profile Generator",
+
+    "version": "0.0.1",
+
+    "description": "My app that generates a fucking profile for the fuckers working at my fucking work",
+
+    "test": "jest",
+
+    "main": "index.js",
+
+    "dependencies": {
+
+        "inquirer": "^8.2.4",
+
+        "jest": "^28.1.3"
+
+    }
+
+}
+
