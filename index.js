@@ -1,40 +1,54 @@
-const http = require('http')
-const qs = require('querystring')
-const calculator = require('./calculator')
- 
-const server = http.createServer(function(request, response) {
-  console.dir(request.param)
- 
-  if (request.method == 'POST') {
-    console.log('POST')
-    var body = ''
-    request.on('data', function(data) {
-      body += data
-    })
- 
-    request.on('end', function() {
-      const post = qs.parse(body)
-      const numbers = post.numbers
-      const result = calculator.add(numbers)
-      response.writeHead(200, {'Content-Type': 'text/html'})
-      response.end('Result: ' + result)
-    })
-  } else {
-    var html = `
-            &lt;html&gt;
-                &lt;body&gt;
-                    &lt;form method="post" action="http://localhost:3000"&gt;Numbers: 
-                        &lt;input type="text" name="numbers" /&gt;
-                        &lt;input type="submit" value="Add" /&gt;
-                    &lt;/form&gt;
-                &lt;/body&gt;
-            &lt;/html&gt;`
-    response.writeHead(200, {'Content-Type': 'text/html'})
-    response.end(html)
-  }
-})
- 
-const port = 3000
-const host = '127.0.0.1'
-server.listen(port, host)
-console.log(`Listening at http://${host}:${port}`)
+const inquirer = require ('inquirer'); 
+
+inquirer.prompt([
+    {
+        type: "input",
+        name:'addManager',
+        message:'Please enter your name, employee ID, email address, and office number.'
+    },
+    {
+        type: 'list',
+        name:'addEngineerOrIntern',
+        message:'Which would you like to perform next?',
+        choices:['Engineer','Intern','Finish Building My Team']
+    } // Each option has to have information, the html generator cannot launch until all
+    // the questions have been answered.  Each employee requires different information. 
+])
+.then(answers => {
+    switch(answers) {
+        case addEngineerOrIntern = 'Engineer': //have to fill out data for Engineer and then re-ask if they wanna add anyone else to the team
+            //addEnginner();
+            addEngineerOrIntern;
+        case addEngineerOrIntern = 'Intern': //have to fill out data for Intern and then re-ask if they wanna add anyone else to the team
+            console.info('Case:Intern',addEngineerOrIntern)
+            //addIntern();
+            addEngineerOrIntern;
+        case addEngineerOrIntern = 'Finish Building My Team': //break out of loop and build HTML page for team.
+            break;
+    }
+    console.info('Answer:', answers.addManager);
+    //console.info('Answer2:', answers.addEngineerOrIntern);
+});
+
+const generateDoc = 
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>`
+async function createFile(generateDoc){
+    try {
+        const content = generateDoc;
+        console.log('content');
+        await fs.writeFile("index.html", generateDoc);
+    } catch (err) {
+        console.log('err', err);
+    }
+};
